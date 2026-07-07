@@ -1,0 +1,160 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Rajdhani';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://static.figma.com/font/Rajdhani-Medium_1') format('woff2');
+}
+
+@font-face {
+  font-family: 'Rajdhani';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://static.figma.com/font/Rajdhani-SemiBold_1') format('woff2');
+}
+
+@font-face {
+  font-family: 'Rajdhani';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://static.figma.com/font/Rajdhani-Bold_1') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('https://static.figma.com/font/FiraSans-Light_1') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://static.figma.com/font/FiraSans-Regular_1') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://static.figma.com/font/FiraSans-Medium_1') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://static.figma.com/font/FiraSans-SemiBold_1') format('woff2');
+}
+
+@theme {
+  --font-sans: 'Fira Sans', system-ui, sans-serif;
+  --font-display: 'Rajdhani', system-ui, sans-serif;
+
+  --color-bg: #04080f;
+  --color-surface: #090f1c;
+  --color-surface-2: #0d1628;
+  --color-border: #1a2540;
+  --color-primary: #00d4aa;
+  --color-primary-dim: rgba(0, 212, 170, 0.12);
+  --color-blue: #3b7aff;
+  --color-blue-dim: rgba(59, 122, 255, 0.12);
+  --color-text: #e8edf5;
+  --color-muted: #6b7fa3;
+  --color-heading: #ffffff;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #04080f;
+  color: #e8edf5;
+  font-family: 'Fira Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a2540;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00d4aa;
+}
+
+.font-display {
+  font-family: 'Rajdhani', system-ui, sans-serif;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #00d4aa 0%, #3b7aff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-primary {
+  box-shadow: 0 0 40px rgba(0, 212, 170, 0.2);
+}
+
+.glow-blue {
+  box-shadow: 0 0 40px rgba(59, 122, 255, 0.2);
+}
+
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 212, 170, 0.4);
+  box-shadow: 0 12px 40px rgba(0, 212, 170, 0.08);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 0.4; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
