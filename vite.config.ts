@@ -2,9 +2,41 @@ import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'node:path'
-
+import fs from 'node:fs'          // added for file existence check
 
 const isFigmaSandbox = process.env.FIGMA === '1' || process.env.FIGMA === 'true'
+
+// ----- safely load site configuration (fallback if file is missing) -----
+const configPath = path.resolve(__dirname, './.figma/make/site.json')
+let siteConfiguration: FigmaSiteConfiguration = {}
+
+if (fs.existsSync(configPath)) {
+  try {
+    siteConfiguration = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
+    console.log('✅ Loaded .figma/make/site.json')
+  } catch (err) {
+    console.warn('⚠️ Failed to parse site.json, using defaults', err)
+  }
+} else {
+  console.warn('⚠️ site.json not found – using default metadata')
+  // Provide defaults that match the plugin's expectations
+  siteConfiguration = {
+    title: 'Figma Make App',
+    description: '',
+    language: 'en',
+    robots: { index: true },
+    icons: { icon: '' },
+    openGraph: { image: '' },
+    analytics: { googleAnalyticsId: '' },
+    customScripts: {
+      headStart: '',
+      headEnd: '',
+      bodyStart: '',
+      bodyEnd: '',
+    },
+    accessibility: { addBypassLinks: false },
+  }
+}
 
 // Vite config — https://vitejs.dev/config/
 export default defineConfig({
@@ -33,6 +65,8 @@ export default defineConfig({
     port: parseInt(process.env.PORT || '8443'),
   },
 })
+
+// ---- type definitions and plugin implementations (unchanged) ----
 
 type FigmaSiteConfiguration = {
   title?: string
