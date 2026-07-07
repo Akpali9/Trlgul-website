@@ -14,140 +14,114 @@ export default function Nav() {
 
   return (
     <nav
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
-        borderBottom: scrolled ? '1px solid rgba(26,37,64,0.8)' : '1px solid transparent',
-        backgroundColor: scrolled ? 'rgba(4,8,15,0.92)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        transition: 'background-color 0.3s ease, border-color 0.3s ease',
-      }}
+      className={`
+        fixed top-0 left-0 right-0 z-50
+        transition-all duration-300 ease-in-out
+        ${scrolled 
+          ? 'bg-[#04080f]/90 backdrop-blur-md border-b border-[#1a2540]/80' 
+          : 'bg-transparent border-b border-transparent'}
+      `}
     >
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', textDecoration: 'none' }}>
+          <a href="#" className="flex items-center gap-2.5 no-underline">
             <TriangleLogo />
-            <span
-              className="font-display"
-              style={{ fontSize: '1.5rem', fontWeight: 700, letterSpacing: '0.12em', color: '#fff' }}
-            >
+            <span className="font-display text-2xl font-bold tracking-[0.12em] text-white">
               TRIGUL
             </span>
           </a>
 
-          {/* Desktop links */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }} className="hidden md:flex">
+          {/* Desktop navigation - hidden on mobile */}
+          <div className="hidden md:flex items-center gap-10">
             {links.map(link => (
               <a
                 key={link}
                 href={`#${link.toLowerCase()}`}
-                style={{
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  letterSpacing: '0.06em',
-                  color: '#6b7fa3',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s',
-                }}
-                onMouseEnter={e => { (e.target as HTMLElement).style.color = '#00d4aa' }}
-                onMouseLeave={e => { (e.target as HTMLElement).style.color = '#6b7fa3' }}
+                className="text-sm font-medium tracking-widest text-[#6b7fa3] hover:text-[#00d4aa] transition-colors duration-200"
               >
                 {link.toUpperCase()}
               </a>
             ))}
           </div>
 
-          {/* CTA */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {/* Right side: CTA + Hamburger */}
+          <div className="flex items-center gap-4">
             <a
               href="#contact"
-              style={{
-                display: 'none',
-                padding: '0.5rem 1.25rem',
-                fontSize: '0.8125rem',
-                fontWeight: 600,
-                letterSpacing: '0.08em',
-                color: '#00d4aa',
-                border: '1px solid rgba(0,212,170,0.4)',
-                borderRadius: '3px',
-                textDecoration: 'none',
-                transition: 'background 0.2s, color 0.2s',
-                backgroundColor: 'transparent',
-              }}
-              className="md:block"
-              onMouseEnter={e => {
-                const el = e.target as HTMLElement
-                el.style.backgroundColor = 'rgba(0,212,170,0.12)'
-              }}
-              onMouseLeave={e => {
-                const el = e.target as HTMLElement
-                el.style.backgroundColor = 'transparent'
-              }}
+              className={`
+                hidden md:inline-block
+                px-5 py-2.5 text-xs font-semibold tracking-widest
+                text-[#00d4aa] border border-[#00d4aa]/40 rounded
+                hover:bg-[#00d4aa]/10 transition-colors duration-200
+              `}
             >
               GET IN TOUCH
             </a>
-            {/* Hamburger */}
+
+            {/* Hamburger button - visible on mobile */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.25rem' }}
-              className="md:hidden"
+              className="md:hidden relative w-6 h-6 flex flex-col items-center justify-center gap-1.5 focus:outline-none"
+              aria-label="Toggle navigation"
+              aria-expanded={menuOpen}
             >
-              <div style={{ width: 22, display: 'flex', flexDirection: 'column', gap: 5 }}>
-                {[0, 1, 2].map(i => (
-                  <div
-                    key={i}
-                    style={{
-                      height: 1.5,
-                      borderRadius: 2,
-                      backgroundColor: '#e8edf5',
-                      width: i === 1 ? 16 : 22,
-                      transition: 'width 0.2s',
-                    }}
-                  />
-                ))}
-              </div>
+              <span
+                className={`
+                  block h-0.5 rounded bg-[#e8edf5] transition-all duration-300 origin-left
+                  ${menuOpen ? 'w-6 rotate-45 translate-y-0.5' : 'w-6'}
+                `}
+              />
+              <span
+                className={`
+                  block h-0.5 rounded bg-[#e8edf5] transition-all duration-300
+                  ${menuOpen ? 'w-0 opacity-0' : 'w-4'}
+                `}
+              />
+              <span
+                className={`
+                  block h-0.5 rounded bg-[#e8edf5] transition-all duration-300 origin-left
+                  ${menuOpen ? 'w-6 -rotate-45 -translate-y-0.5' : 'w-6'}
+                `}
+              />
             </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
-        {menuOpen && (
-          <div
-            style={{
-              padding: '1rem 0 1.5rem',
-              borderTop: '1px solid rgba(26,37,64,0.6)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem',
-            }}
-          >
+        {/* Mobile menu with smooth expand/collapse */}
+        <div
+          className={`
+            md:hidden overflow-hidden transition-all duration-300 ease-in-out
+            ${menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+          `}
+        >
+          <div className="pt-2 pb-4 border-t border-[#1a2540]/60 flex flex-col gap-3">
             {links.map(link => (
               <a
                 key={link}
                 href={`#${link.toLowerCase()}`}
                 onClick={() => setMenuOpen(false)}
-                style={{
-                  fontSize: '0.9375rem',
-                  fontWeight: 500,
-                  letterSpacing: '0.06em',
-                  color: '#6b7fa3',
-                  textDecoration: 'none',
-                }}
+                className="text-[0.9375rem] font-medium tracking-widest text-[#6b7fa3] hover:text-[#00d4aa] transition-colors"
               >
                 {link.toUpperCase()}
               </a>
             ))}
+            {/* Optional: add CTA inside mobile menu */}
+            <a
+              href="#contact"
+              onClick={() => setMenuOpen(false)}
+              className="mt-2 inline-block self-start px-5 py-2 text-xs font-semibold tracking-widest text-[#00d4aa] border border-[#00d4aa]/40 rounded hover:bg-[#00d4aa]/10 transition-colors"
+            >
+              GET IN TOUCH
+            </a>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   )
 }
 
+// ----- Logo component (unchanged) -----
 function TriangleLogo() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
